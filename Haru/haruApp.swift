@@ -6,12 +6,23 @@
 //
 
 import SwiftUI
+import FamilyControls
 
 @main
-struct haruApp: App {
+struct HaruApp: App {
+    @StateObject private var screenTimeManager = ScreenTimeManager()
+    
+    init() {
+        // Prepare authorization center
+        Task {
+            try? await AuthorizationCenter.shared.requestAuthorization(for: .individual)
+        }
+    }
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(screenTimeManager)
         }
     }
 }
