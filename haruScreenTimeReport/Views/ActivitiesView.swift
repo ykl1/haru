@@ -15,7 +15,8 @@ struct ActivitiesView: View {
         
         VStack {
             Spacer(minLength: 50)
-            Text("Usage time: ")
+            // Display total usage time from DeviceActivity
+            Text("Usage time: \(formatTotalUsageTime(activities.duration))")
                 .bold()
                 .font(.title3)
             List(activities.apps) { app in
@@ -24,8 +25,19 @@ struct ActivitiesView: View {
         }
         
     }
-    
+
+    // Function to format total usage time
+    private func formatTotalUsageTime(_ duration: TimeInterval) -> String {
+        let totalSeconds = Int(duration)
+        let hours = totalSeconds / 3600
+        let minutes = (totalSeconds % 3600) / 60
+        let seconds = totalSeconds % 60
+        return String(format: "%dh %02dm %02ds", hours, minutes, seconds)
+    }
+
 }
+
+
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
