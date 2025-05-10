@@ -18,12 +18,7 @@ struct ContentView: View {
             
             if screenTimeManager.isAuthorized {
                 VStack {
-                    Text("Today's Screen Time")
-                        .font(.headline)
-                    
-                    Text(formatTimeInterval(screenTimeManager.totalScreenTime))
-                        .font(.system(size: 36, weight: .bold))
-                        .padding()
+                    MainTabView()
                 }
                 .padding()
                 .background(RoundedRectangle(cornerRadius: 12).fill(Color(.systemGray6)))
@@ -45,16 +40,12 @@ struct ContentView: View {
         }
         .padding()
     }
-    
-    // Helper function to format time interval
-    private func formatTimeInterval(_ interval: TimeInterval) -> String {
-        let hours = Int(interval) / 3600
-        let minutes = (Int(interval) % 3600) / 60
-        
-        if hours > 0 {
-            return "\(hours)h \(minutes)m"
-        } else {
-            return "\(minutes)m"
+}
+
+struct MainTabView: View {
+    var body: some View {
+        TabView {
+            ReportsView()
         }
     }
 }
