@@ -8,12 +8,19 @@
 import SwiftUI
 
 struct ReportsView: View {
-    
+    @State private var isLoading = true
     var body: some View {
         ZStack {
-            Loading(text: "loading...",
-                    scale: 1)
-            DeviceActivityReporterAdapter()
+            if isLoading {
+                Loading(text: "loading...",
+                        scale: 1)
+            }
+            DeviceActivityReporterAdapter().onAppear {
+                // Give the DeviceActivityReport some time to load
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                        isLoading = false
+                    }
+            }
         }
     }
 }

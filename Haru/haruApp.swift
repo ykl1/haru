@@ -10,17 +10,20 @@ import FamilyControls
 
 @main
 struct HaruApp: App {
+    // State Object (persistent across view refreshes)
     @StateObject private var screenTimeManager = ScreenTimeManager()
     
     init() {
-        // Prepare authorization center
+        // Async Task to request authorization
         Task {
             try? await AuthorizationCenter.shared.requestAuthorization(for: .individual)
         }
     }
     
+    // Sets up main ContentView and injects screenTimeManager as environment object
     var body: some Scene {
         WindowGroup {
+            // environmentObject allows you to share an ObservableObject across multiple views
             ContentView()
                 .environmentObject(screenTimeManager)
         }
